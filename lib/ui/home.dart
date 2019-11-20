@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grulesapp/models/eventos.dart';
+import 'package:grulesapp/ui/grupos.dart';
 import 'package:intl/intl.dart';
 import '../models/eventos_controller.dart';
 
@@ -46,16 +47,15 @@ class _HomePageState extends State<HomePage> {
           child: CircularProgressIndicator(),
         );
       default:
-        print(snapshot.error);
         if (snapshot.hasError) {
           return _error();
         } else {
-          return _data(snapshot.data);
+          return _data(context, snapshot.data);
         }
     }
   }
 
-  Widget _data(List<Evento> grupos) {
+  Widget _data(BuildContext context, List<Evento> grupos) {
     return ListView.separated(
       separatorBuilder: (context, i) {
         return Divider(
@@ -64,13 +64,21 @@ class _HomePageState extends State<HomePage> {
       },
       itemCount: grupos.length,
       itemBuilder: (context, indice) {
-        return _getItem(grupos[indice]);
+        return _getItem(context, grupos[indice]);
       },
     );
   }
 
-  Widget _getItem(Evento grupo) {
+  Widget _getItem(BuildContext context, Evento grupo) {
     return ListTile(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => GruposPage(grupo),
+          ),
+        );
+      },
       leading: CircleAvatar(
         child: Icon(Icons.event),
       ),
