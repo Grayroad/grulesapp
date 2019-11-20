@@ -1,13 +1,13 @@
 import 'dart:convert';
+import 'controller.dart';
 import 'grupos.dart';
 import 'package:http/http.dart' as http;
 
-//const url = 'http://web/api/grupos';
-const url = "http://192.168.0.3/wseletrosin/api/ordem/cliente/11";
+const url = "cliente/11";
 
-class GruposController {
+class GruposController extends Controller {
   static Future<List<Grupo>> getGrupos() async {
-    http.Response response = await http.get(url);
+    http.Response response = await http.get(Controller.urlBase + url);
     Map<String, dynamic> o = jsonDecode(response.body);
     List<Map<String, dynamic>> grupos =
         new List<Map<String, dynamic>>.from(o["dados"]);

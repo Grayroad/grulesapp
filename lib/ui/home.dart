@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../models/grupos.dart';
-import '../models/grupos_controller.dart';
+import 'package:grulesapp/models/eventos.dart';
+import 'package:intl/intl.dart';
+import '../models/eventos_controller.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -32,12 +33,12 @@ class _HomePageState extends State<HomePage> {
 
   Widget _getBody() {
     return FutureBuilder(
-      future: GruposController.getGrupos(),
+      future: EventoController.getEventos(),
       builder: _builder,
     );
   }
 
-  Widget _builder(BuildContext context, AsyncSnapshot<List<Grupo>> snapshot) {
+  Widget _builder(BuildContext context, AsyncSnapshot<List<Evento>> snapshot) {
     switch (snapshot.connectionState) {
       case ConnectionState.none:
       case ConnectionState.waiting:
@@ -45,6 +46,7 @@ class _HomePageState extends State<HomePage> {
           child: CircularProgressIndicator(),
         );
       default:
+        print(snapshot.error);
         if (snapshot.hasError) {
           return _error();
         } else {
@@ -53,8 +55,13 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Widget _data(List<Grupo> grupos) {
-    return ListView.builder(
+  Widget _data(List<Evento> grupos) {
+    return ListView.separated(
+      separatorBuilder: (context, i) {
+        return Divider(
+          height: 1,
+        );
+      },
       itemCount: grupos.length,
       itemBuilder: (context, indice) {
         return _getItem(grupos[indice]);
@@ -62,9 +69,36 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _getItem(Grupo grupo) {
+  Widget _getItem(Evento grupo) {
     return ListTile(
-      title: Text("${grupo.id}"),
+      leading: CircleAvatar(
+        child: Icon(Icons.event),
+      ),
+      title: Text(grupo.descricao),
+      subtitle: Row(
+        children: <Widget>[
+          Icon(
+            Icons.event_available,
+            color: Colors.green[600],
+          ),
+          Expanded(
+            child: Container(
+              margin: EdgeInsets.only(left: 5),
+              child: Text(DateFormat('dd/MM kk:mm').format(grupo.dataInicio)),
+            ),
+          ),
+          Icon(
+            Icons.event_busy,
+            color: Colors.red[600],
+          ),
+          Expanded(
+            child: Container(
+              margin: EdgeInsets.only(left: 5),
+              child: Text(DateFormat('dd/MM kk:mm').format(grupo.dataTermino)),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
