@@ -1,9 +1,12 @@
+import 'grupos.dart';
+
 class Evento {
   DateTime dataInclusao;
   DateTime dataInicio;
   DateTime dataTermino;
   String descricao;
   int idEvento;
+  List<Grupo> grupos;
 
   static Evento fromMap(Map<String, dynamic> map) {
     Evento evento = Evento();
@@ -12,6 +15,9 @@ class Evento {
     evento.dataTermino = map["DataTermino"];
     evento.descricao = map["Descricao"];
     evento.idEvento = map["IdEvento"];
+    evento.grupos = (map["Grupos"] as List<Map<String, dynamic>>)
+      .map((x) => Grupo.fromMap(x))
+      .toList();
 
     return evento;
   }
@@ -22,7 +28,8 @@ class Evento {
       "DataInicio": dataInicio,
       "DataTermino": dataTermino,
       "Descricao": descricao,
-      "IdEvento": idEvento
+      "IdEvento": idEvento,
+      "Grupos": grupos
     };
   }
 }

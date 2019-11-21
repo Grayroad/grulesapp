@@ -1,3 +1,3 @@
 class Controller {
-  static String urlBase = "http://localhost:63036/api/";
+  static String urlBase = "http://grulesproject.gear.host/api/";
 }
