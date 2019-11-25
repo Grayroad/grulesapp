@@ -34,10 +34,10 @@ class EventoController {
     Grupo grupo1 = Grupo();
     grupo1.idEvento = 1;
     grupo1.idGrupo = 1;
-    grupo1.titulo = "A grande perca de tempo";
+    grupo1.titulo = "Lorem Ipsum";
     grupo1.alunos = [aluno1];
     grupo1.descricao =
-        """Iremos falar sobre como as pessoas perdem tempo em falar na frente de uma faculdade inteira sobre um tema de estrema esquerda e sem praticidade na àrea de atuação""";
+        """Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s""";
 
     Grupo grupo2 = Grupo();
     grupo2.idEvento = 1;

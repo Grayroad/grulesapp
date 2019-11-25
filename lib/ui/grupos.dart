@@ -83,12 +83,15 @@ class GrupoItem extends StatelessWidget {
 class AlunosPage extends StatelessWidget {
   final List<Aluno> alunos;
   AlunosPage(this.alunos);
+  double get _height {
+    return (alunos.length * 90).toDouble();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(bottom: 10),
-      height: 150,
+      height: _height,
       child: ListView.separated(
         separatorBuilder: (a, b) => Divider(),
         itemCount: alunos.length,
@@ -96,7 +99,7 @@ class AlunosPage extends StatelessWidget {
           leading: CircleAvatar(
             child: Icon(Icons.person),
           ),
-          title: Text(alunos[b].nome),
+          title: Text("${alunos[b].nome} ${alunos[b].sobrenome}"),
           subtitle: Text("Matricula: ${alunos[b].matricula}"),
         ),
       ),
